@@ -11,7 +11,7 @@
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-M7H5H9LX2E');
+        gtag('config', 'G-50YVJJ0MEC'); 
     </script>
     
     <!-- Estilos e Fontes -->
@@ -610,15 +610,10 @@
                     <a href="#" class="signup-link">Cadastre-se gratuitamente</a>
                 </p>
                 <div class="social-login">
-                    <p>Ou entre com:</p>
-                    <div class="social-buttons">
-                        <button type="button" class="btn-social google" id="googleLogin" onclick="trackGAEvent('click_login_social', {provider: 'google'})">
-                            <i class="fab fa-google"></i> Google
-                        </button>
-                        <button type="button" class="btn-social x" id="xLogin" onclick="trackGAEvent('click_login_social', {provider: 'x'})">
-                            <i class="fab fa-x-twitter"></i> X (Twitter)
-                        </button>
-                    </div>
+                    <p style="color: #ff9800; font-size: 0.9rem; text-align: center; padding: 10px; background: rgba(255, 152, 0, 0.1); border-radius: 5px;">
+                        <i class="fas fa-info-circle"></i> 
+                        Login social em desenvolvimento. Use login por email.
+                    </p>
                 </div>
             </form>
         </div>
@@ -664,15 +659,10 @@
                     <a href="#" class="login-link">Faça login</a>
                 </p>
                 <div class="social-login">
-                    <p>Ou cadastre-se com:</p>
-                    <div class="social-buttons">
-                        <button type="button" class="btn-social google" id="googleSignup" onclick="trackGAEvent('click_signup_social', {provider: 'google'})">
-                            <i class="fab fa-google"></i> Google
-                        </button>
-                        <button type="button" class="btn-social x" id="xSignup" onclick="trackGAEvent('click_signup_social', {provider: 'x'})">
-                            <i class="fab fa-x-twitter"></i> X (Twitter)
-                        </button>
-                    </div>
+                    <p style="color: #ff9800; font-size: 0.9rem; text-align: center; padding: 10px; background: rgba(255, 152, 0, 0.1); border-radius: 5px;">
+                        <i class="fas fa-info-circle"></i> 
+                        Cadastro social em breve. Use cadastro por email.
+                    </p>
                 </div>
             </form>
         </div>
@@ -692,12 +682,36 @@
     </div>
 
     <!-- Scripts -->
-    <script src="script.js"></script>
-    <!-- Stripe Integration -->
-    <script src="https://js.stripe.com/v3/"></script>
-    <!-- Firebase para autenticação social -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="script.js"></script>
+<!-- Stripe Integration -->
+<script src="https://js.stripe.com/v3/"></script>
+<!-- Firebase SDKs -->
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+  
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAnFayPiwd4dhHdPIcPzzxZ4GhLMVDrBQk",
+    authDomain: "elitecontent-rui.firebaseapp.com",
+    projectId: "elitecontent-rui",
+    storageBucket: "elitecontent-rui.firebasestorage.app",
+    messagingSenderId: "1032387803482",
+    appId: "1:1032387803482:web:3c7d31dafa979aafd19b63",
+    measurementId: "G-50YVJJ0MEC"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const analytics = getAnalytics(app);
+  
+  // Disponibiliza globalmente
+  window.firebaseApp = app;
+  window.firebaseAuth = auth;
+</script>
     
     <!-- Analytics Debug Console -->
     <div id="gaDebugConsole"></div>
