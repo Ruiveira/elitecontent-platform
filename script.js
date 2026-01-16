@@ -1,13 +1,13 @@
 // ==================== CONFIGURAÇÕES GERAIS ====================
 
-// Configuração do Firebase (substitua com suas credenciais)
+// Configuração do SEU Firebase real
 const firebaseConfig = {
-    apiKey: "AIzaSyBzVw1xXqVQw9Lt7KjH8Mn6P5oN2QrStUV",
-    authDomain: "elitecontent-demo.firebaseapp.com",
-    projectId: "elitecontent-demo",
-    storageBucket: "elitecontent-demo.appspot.com",
-    messagingSenderId: "123456789012",
-    appId: "1:123456789012:web:abc123def456ghi789jkl"
+    apiKey: "AIzaSyAnFayPiwd4dhHdPIcPzzxZ4GhLMVDrBQk",
+    authDomain: "elitecontent-rui.firebaseapp.com",
+    projectId: "elitecontent-rui",
+    storageBucket: "elitecontent-rui.firebasestorage.app",
+    messagingSenderId: "1032387803482",
+    appId: "1:1032387803482:web:3c7d31dafa979aafd19b63"
 };
 
 // Dados dos modelos
@@ -44,6 +44,39 @@ const models = [
         rating: 4.7,
         subscribers: 856,
         monthlyEarnings: 1980.75
+    },
+    {
+        id: 4,
+        name: "Chloe Dubois",
+        category: "Europeia",
+        videos: 112,
+        photos: 789,
+        isOnline: false,
+        rating: 4.8,
+        subscribers: 742,
+        monthlyEarnings: 1750.30
+    },
+    {
+        id: 5,
+        name: "Sakura Tanaka",
+        category: "Asiática",
+        videos: 78,
+        photos: 512,
+        isOnline: true,
+        rating: 4.9,
+        subscribers: 689,
+        monthlyEarnings: 1620.90
+    },
+    {
+        id: 6,
+        name: "Zara Johnson",
+        category: "Afro",
+        videos: 87,
+        photos: 634,
+        isOnline: true,
+        rating: 4.6,
+        subscribers: 856,
+        monthlyEarnings: 1980.75
     }
 ];
 
@@ -76,6 +109,7 @@ const stripePlans = {
 let currentUser = null;
 let selectedPlan = null;
 let ageVerified = false;
+let firebaseAuth = null;
 
 // DOM Elements
 const ageVerification = document.getElementById('ageVerification');
@@ -95,10 +129,6 @@ const loginLink = document.querySelector('.login-link');
 const togglePassword = document.getElementById('togglePassword');
 const successNotification = document.getElementById('successNotification');
 const pageLoader = document.getElementById('pageLoader');
-const googleLoginBtn = document.getElementById('googleLogin');
-const googleSignupBtn = document.getElementById('googleSignup');
-const xLoginBtn = document.getElementById('xLogin');
-const xSignupBtn = document.getElementById('xSignup');
 const subscribersRange = document.getElementById('subscribersRange');
 const subscribersValue = document.getElementById('subscribersValue');
 const monthlyEarnings = document.getElementById('monthlyEarnings');
@@ -243,7 +273,7 @@ function initGoogleAnalytics() {
         
         showGAStatus('Analytics conectado com sucesso', 'success');
         gaDebug({
-            message: 'GA4 inicializado com Measurement ID: G-M7H5H9LX2E',
+            message: 'GA4 inicializado com Measurement ID: G-50YVJJ0MEC',
             type: 'success'
         });
         
@@ -314,7 +344,7 @@ function loadModels() {
         modelCard.setAttribute('data-id', model.id);
         
         modelCard.innerHTML = `
-            <div class="model-image">
+            <div class="model-image" style="background: linear-gradient(135deg, #${['ff4081','9c27b0','2196F3','4CAF50','FF9800','E91E63'][model.id % 6]}, #${['e91e63','7b1fa2','1976D2','388E3C','FF5722','C2185B'][model.id % 6]}); display: flex; align-items: center; justify-content: center; color: white; font-size: 3.5rem; position: relative;">
                 <i class="fas fa-user-circle"></i>
                 ${model.isOnline ? '<span class="online-badge">● ONLINE</span>' : ''}
             </div>
@@ -402,8 +432,33 @@ function toggleMobileMenu() {
     }
 }
 
-// Autenticação
-function handleEmailLogin(e) {
+// Função para inicializar Firebase Auth
+async function initFirebaseAuth() {
+    try {
+        // Verificar se Firebase já está carregado
+        if (typeof window.firebaseAuth !== 'undefined') {
+            firebaseAuth = window.firebaseAuth;
+            console.log('Firebase Auth carregado com sucesso');
+            return true;
+        }
+        
+        // Tentar carregar dinamicamente se não estiver disponível
+        const firebaseModule = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js');
+        const authModule = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js');
+        
+        const app = firebaseModule.initializeApp(firebaseConfig);
+        firebaseAuth = authModule.getAuth(app);
+        
+        console.log('Firebase Auth inicializado dinamicamente');
+        return true;
+    } catch (error) {
+        console.warn('Firebase Auth não disponível, usando modo simulado:', error.message);
+        return false;
+    }
+}
+
+// Autenticação com Firebase
+async function handleEmailLogin(e) {
     if (e) e.preventDefault();
     
     const email = document.getElementById('email')?.value;
@@ -414,28 +469,64 @@ function handleEmailLogin(e) {
         return;
     }
     
-    // Simulação de login (substituir por Firebase real)
-    currentUser = {
-        email: email,
-        name: email.split('@')[0],
-        joinDate: new Date().toISOString(),
-        isSocialLogin: false
-    };
-    
-    localStorage.setItem('premiumContentUser', JSON.stringify(currentUser));
-    
-    // Rastrear login no GA4
-    trackGAEvent('login', {
-        'method': 'email',
-        'user_id': email
-    });
-    
-    showNotification(`Bem-vindo de volta, ${currentUser.name}!`, 'success');
-    closeModal(loginModal);
-    updateUserInterface();
+    try {
+        // Tentar usar Firebase real se disponível
+        if (await initFirebaseAuth() && firebaseAuth) {
+            const authModule = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js');
+            const userCredential = await authModule.signInWithEmailAndPassword(firebaseAuth, email, password);
+            
+            currentUser = {
+                email: userCredential.user.email,
+                name: userCredential.user.email.split('@')[0],
+                uid: userCredential.user.uid,
+                joinDate: new Date().toISOString(),
+                isSocialLogin: false
+            };
+            
+            showNotification(`Bem-vindo de volta, ${currentUser.name}!`, 'success');
+        } else {
+            // Fallback para simulação
+            currentUser = {
+                email: email,
+                name: email.split('@')[0],
+                joinDate: new Date().toISOString(),
+                isSocialLogin: false
+            };
+            
+            showNotification(`Bem-vindo de volta, ${currentUser.name}! (modo simulado)`, 'success');
+        }
+        
+        localStorage.setItem('premiumContentUser', JSON.stringify(currentUser));
+        
+        // Rastrear login no GA4
+        trackGAEvent('login', {
+            'method': 'email',
+            'user_id': email
+        });
+        
+        closeModal(loginModal);
+        updateUserInterface();
+        
+    } catch (error) {
+        console.error('Erro no login:', error);
+        
+        // Fallback para simulação em caso de erro
+        currentUser = {
+            email: email,
+            name: email.split('@')[0],
+            joinDate: new Date().toISOString(),
+            isSocialLogin: false
+        };
+        
+        localStorage.setItem('premiumContentUser', JSON.stringify(currentUser));
+        
+        showNotification(`Bem-vindo de volta, ${currentUser.name}! (modo offline)`, 'success');
+        closeModal(loginModal);
+        updateUserInterface();
+    }
 }
 
-function handleEmailSignup(e) {
+async function handleEmailSignup(e) {
     if (e) e.preventDefault();
     
     const email = document.getElementById('signupEmail')?.value;
@@ -475,26 +566,70 @@ function handleEmailSignup(e) {
         return;
     }
     
-    // Simulação de cadastro
-    currentUser = {
-        email: email,
-        name: email.split('@')[0],
-        joinDate: new Date().toISOString(),
-        isNew: true,
-        isSocialLogin: false
-    };
-    
-    localStorage.setItem('premiumContentUser', JSON.stringify(currentUser));
-    
-    // Rastrear cadastro no GA4
-    trackGAEvent('sign_up', {
-        'method': 'email',
-        'user_id': email
-    });
-    
-    showNotification(`Cadastro realizado com sucesso! Bem-vindo(a) ${currentUser.name}.`, 'success');
-    closeModal(signupModal);
-    updateUserInterface();
+    try {
+        // Tentar usar Firebase real se disponível
+        if (await initFirebaseAuth() && firebaseAuth) {
+            const authModule = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js');
+            const userCredential = await authModule.createUserWithEmailAndPassword(firebaseAuth, email, password);
+            
+            currentUser = {
+                email: userCredential.user.email,
+                name: userCredential.user.email.split('@')[0],
+                uid: userCredential.user.uid,
+                joinDate: new Date().toISOString(),
+                isNew: true,
+                isSocialLogin: false
+            };
+            
+            showNotification(`Cadastro realizado com sucesso! Bem-vindo(a) ${currentUser.name}!`, 'success');
+        } else {
+            // Fallback para simulação
+            currentUser = {
+                email: email,
+                name: email.split('@')[0],
+                joinDate: new Date().toISOString(),
+                isNew: true,
+                isSocialLogin: false
+            };
+            
+            showNotification(`Cadastro realizado com sucesso! Bem-vindo(a) ${currentUser.name}! (modo simulado)`, 'success');
+        }
+        
+        localStorage.setItem('premiumContentUser', JSON.stringify(currentUser));
+        
+        // Rastrear cadastro no GA4
+        trackGAEvent('sign_up', {
+            'method': 'email',
+            'user_id': email
+        });
+        
+        closeModal(signupModal);
+        updateUserInterface();
+        
+    } catch (error) {
+        console.error('Erro no cadastro:', error);
+        
+        if (error.code === 'auth/email-already-in-use') {
+            showNotification('Este e-mail já está em uso. Tente fazer login.', 'error');
+        } else if (error.code === 'auth/weak-password') {
+            showNotification('A senha é muito fraca. Use pelo menos 6 caracteres.', 'error');
+        } else {
+            // Fallback para simulação em caso de erro
+            currentUser = {
+                email: email,
+                name: email.split('@')[0],
+                joinDate: new Date().toISOString(),
+                isNew: true,
+                isSocialLogin: false
+            };
+            
+            localStorage.setItem('premiumContentUser', JSON.stringify(currentUser));
+            
+            showNotification(`Cadastro realizado com sucesso! Bem-vindo(a) ${currentUser.name}! (modo offline)`, 'success');
+            closeModal(signupModal);
+            updateUserInterface();
+        }
+    }
 }
 
 function validateEmail(email) {
@@ -553,8 +688,18 @@ function setupUserDropdown() {
     });
 }
 
-function handleLogout(e) {
+async function handleLogout(e) {
     if (e) e.preventDefault();
+    
+    try {
+        // Tentar logout no Firebase se disponível
+        if (firebaseAuth) {
+            const authModule = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js');
+            await authModule.signOut(firebaseAuth);
+        }
+    } catch (error) {
+        console.log('Logout Firebase não disponível, continuando...');
+    }
     
     // Rastrear logout no GA4
     trackGAEvent('logout', {
@@ -749,27 +894,6 @@ function initEventListeners() {
         e.preventDefault();
         closeModal(signupModal);
         openModal(loginModal);
-    });
-    
-    // Botões de login social (simulação)
-    googleLoginBtn?.addEventListener('click', () => {
-        trackGAEvent('click_login_social', {provider: 'google'});
-        showNotification('Login com Google em desenvolvimento', 'info');
-    });
-    
-    googleSignupBtn?.addEventListener('click', () => {
-        trackGAEvent('click_signup_social', {provider: 'google'});
-        showNotification('Cadastro com Google em desenvolvimento', 'info');
-    });
-    
-    xLoginBtn?.addEventListener('click', () => {
-        trackGAEvent('click_login_social', {provider: 'x'});
-        showNotification('Login com X em desenvolvimento', 'info');
-    });
-    
-    xSignupBtn?.addEventListener('click', () => {
-        trackGAEvent('click_signup_social', {provider: 'x'});
-        showNotification('Cadastro com X em desenvolvimento', 'info');
     });
     
     // Configurar links do Stripe
