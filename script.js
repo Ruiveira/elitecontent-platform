@@ -1,6 +1,6 @@
 // ==================== CONFIGURAÇÕES GERAIS ====================
 
-// Configuração do SEU Firebase real
+// Configuração do Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyAnFayPiwd4dhHdPIcPzzxZ4GhLMVDrBQk",
     authDomain: "elitecontent-rui.firebaseapp.com",
@@ -8,6 +8,17 @@ const firebaseConfig = {
     storageBucket: "elitecontent-rui.firebasestorage.app",
     messagingSenderId: "1032387803482",
     appId: "1:1032387803482:web:3c7d31dafa979aafd19b63"
+};
+
+// Configuração do site
+const SITE_CONFIG = {
+    domain: 'https://ruiveira.github.io/elitecontent-platform/',
+    name: 'EliteContent Platform',
+    gaIds: ['G-50YVJJ0MEC', 'G-M7H5H9LX2E'],
+    otherSites: {
+        solucoesRapidas: 'https://ruiveira.github.io/solucoes-rapidas/',
+        guiaMulheres: 'https://guiaparamulheres.lovable.app'
+    }
 };
 
 // Dados dos modelos
@@ -139,21 +150,15 @@ const yearlyEarnings = document.getElementById('yearlyEarnings');
 // Função para rastrear eventos no GA4
 function trackGAEvent(eventName, eventParams = {}) {
     try {
-        // Verificar se gtag está disponível
         if (typeof gtag !== 'undefined') {
             gtag('event', eventName, eventParams);
             
-            // Log para debug
+            // Debug visual
             gaDebug({
                 message: `Evento GA4: ${eventName}`,
                 data: eventParams,
                 type: 'success'
             });
-            
-            // Adicionar animação de feedback visual
-            const eventElement = event.target || document.body;
-            eventElement.classList.add('event-tracked');
-            setTimeout(() => eventElement.classList.remove('event-tracked'), 500);
             
             return true;
         } else {
@@ -181,11 +186,33 @@ function gaDebug(log) {
             const consoleDiv = document.createElement('div');
             consoleDiv.id = 'gaDebugConsole';
             consoleDiv.className = 'active';
+            consoleDiv.style.cssText = `
+                position: fixed;
+                bottom: 10px;
+                right: 10px;
+                width: 300px;
+                max-height: 200px;
+                overflow-y: auto;
+                background: rgba(0,0,0,0.8);
+                color: white;
+                padding: 10px;
+                font-size: 12px;
+                z-index: 9999;
+                display: none;
+                border-radius: 5px;
+            `;
             document.body.appendChild(consoleDiv);
         }
         
         const logEntry = document.createElement('div');
         logEntry.className = `debug-log ${log.type || 'info'}`;
+        logEntry.style.cssText = `
+            padding: 5px;
+            margin: 2px 0;
+            border-left: 3px solid ${log.type === 'error' ? '#f44336' : log.type === 'success' ? '#4CAF50' : '#2196F3'};
+            font-family: monospace;
+            font-size: 11px;
+        `;
         
         const timestamp = new Date().toLocaleTimeString();
         let logMessage = `[${timestamp}] ${log.message}`;
@@ -202,17 +229,7 @@ function gaDebug(log) {
             debugConsole.removeChild(debugConsole.firstChild);
         }
         
-        // Scroll para o final
         debugConsole.scrollTop = debugConsole.scrollHeight;
-        
-        // Também log no console
-        if (log.type === 'error') {
-            console.error(log.message, log.data || '');
-        } else if (log.type === 'success') {
-            console.log(log.message, log.data || '');
-        } else {
-            console.info(log.message, log.data || '');
-        }
     } catch (error) {
         console.error('Erro no debug do GA:', error);
     }
@@ -226,21 +243,29 @@ function showGAStatus(message, type = 'info') {
             statusDiv = document.createElement('div');
             statusDiv.id = 'gaStatus';
             statusDiv.className = 'ga-status';
+            statusDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 10px 15px;
+                background: ${type === 'error' ? '#f44336' : type === 'success' ? '#4CAF50' : '#2196F3'};
+                color: white;
+                border-radius: 5px;
+                z-index: 9999;
+                display: none;
+                font-size: 14px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            `;
             document.body.appendChild(statusDiv);
         }
         
         statusDiv.textContent = message;
-        statusDiv.className = `ga-status ${type} active`;
+        statusDiv.style.background = type === 'error' ? '#f44336' : type === 'success' ? '#4CAF50' : '#2196F3';
+        statusDiv.style.display = 'block';
         
-        // Auto-esconder após 3 segundos
         setTimeout(() => {
-            statusDiv.classList.remove('active');
+            statusDiv.style.display = 'none';
         }, 3000);
-        
-        gaDebug({
-            message: `Status GA4: ${message}`,
-            type: type
-        });
     } catch (error) {
         console.error('Erro ao mostrar status GA:', error);
     }
@@ -249,12 +274,10 @@ function showGAStatus(message, type = 'info') {
 // Inicializar Google Analytics
 function initGoogleAnalytics() {
     try {
-        // Verificar se o GA está carregado
         if (typeof gtag === 'undefined') {
             throw new Error('GA4 não carregado');
         }
         
-        // Configurar dados do usuário se estiver logado
         if (currentUser) {
             gtag('set', 'user_properties', {
                 'user_id': currentUser.email,
@@ -263,17 +286,17 @@ function initGoogleAnalytics() {
             });
         }
         
-        // Rastrear evento de inicialização
         trackGAEvent('app_initialized', {
             'age_verified': ageVerified,
             'user_logged_in': !!currentUser,
             'screen_resolution': `${window.screen.width}x${window.screen.height}`,
-            'device_type': /Mobile|Android|iPhone/i.test(navigator.userAgent) ? 'mobile' : 'desktop'
+            'device_type': /Mobile|Android|iPhone/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
+            'domain': SITE_CONFIG.domain
         });
         
-        showGAStatus('Analytics conectado com sucesso', 'success');
+        showGAStatus('Analytics conectado', 'success');
         gaDebug({
-            message: 'GA4 inicializado com Measurement ID: G-50YVJJ0MEC',
+            message: 'GA4 inicializado com sucesso',
             type: 'success'
         });
         
@@ -281,17 +304,12 @@ function initGoogleAnalytics() {
     } catch (error) {
         console.error('Erro ao inicializar GA4:', error);
         showGAStatus('Erro no Analytics', 'error');
-        gaDebug({
-            message: `Falha ao inicializar GA4: ${error.message}`,
-            type: 'error'
-        });
         return false;
     }
 }
 
-// ==================== FUNÇÕES DO SITE ====================
+// ==================== VERIFICAÇÃO DE IDADE ====================
 
-// Verificação de Idade
 function checkAgeVerification() {
     const ageConfirmed = localStorage.getItem('ageVerified');
     if (ageConfirmed === 'true') {
@@ -299,7 +317,6 @@ function checkAgeVerification() {
         ageVerification.style.display = 'none';
         document.body.style.overflow = 'auto';
         
-        // Rastrear no GA4
         trackGAEvent('age_verification_remembered');
     } else {
         ageVerification.style.display = 'flex';
@@ -313,7 +330,6 @@ function confirmAge() {
     ageVerification.style.display = 'none';
     document.body.style.overflow = 'auto';
     
-    // Rastrear no GA4
     trackGAEvent('age_verified', {
         'event_category': 'Engagement',
         'event_label': 'Age Gate Approved'
@@ -323,7 +339,6 @@ function confirmAge() {
 }
 
 function denyAge() {
-    // Rastrear no GA4
     trackGAEvent('age_verification_denied', {
         'event_category': 'Engagement',
         'event_label': 'Age Gate Denied'
@@ -332,24 +347,34 @@ function denyAge() {
     window.location.href = 'https://www.google.com';
 }
 
-// Carregar modelos
+// ==================== CARREGAR MODELOS COM IMAGENS ====================
+
 function loadModels() {
     if (!modelsGrid) return;
     
     modelsGrid.innerHTML = '';
     
-    models.forEach(model => {
+    models.forEach((model, index) => {
         const modelCard = document.createElement('div');
         modelCard.className = 'model-card-preview';
         modelCard.setAttribute('data-id', model.id);
         
+        // Tenta usar imagem real
+        const imageNumber = (index % 6) + 1;
+        const imageUrl = `assets/images/models/model-${imageNumber}.jpg`;
+        
         modelCard.innerHTML = `
-            <div class="model-image" style="background: linear-gradient(135deg, #${['ff4081','9c27b0','2196F3','4CAF50','FF9800','E91E63'][model.id % 6]}, #${['e91e63','7b1fa2','1976D2','388E3C','FF5722','C2185B'][model.id % 6]}); display: flex; align-items: center; justify-content: center; color: white; font-size: 3.5rem; position: relative;">
-                <i class="fas fa-user-circle"></i>
+            <div class="model-image-container">
+                <img src="${imageUrl}" 
+                     alt="${model.name} - ${model.category}" 
+                     class="model-image-real" 
+                     loading="lazy"
+                     onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\"model-image-placeholder\" style=\"background: linear-gradient(135deg, #${['ff4081','9c27b0','2196F3','4CAF50','FF9800','E91E63'][index % 6]}, #${['e91e63','7b1fa2','1976D2','388E3C','FF5722','C2185B'][index % 6]});\"><i class=\"fas fa-user-circle\"></i></div>'">
+                <div class="model-image-overlay"></div>
                 ${model.isOnline ? '<span class="online-badge">● ONLINE</span>' : ''}
             </div>
             <div class="model-info">
-                <div style="display: flex; justify-content: space-between; align-items: start;">
+                <div class="model-header">
                     <div>
                         <h3 class="model-name">${model.name}</h3>
                         <span class="model-category">${model.category}</span>
@@ -366,7 +391,8 @@ function loadModels() {
                 <div class="model-earnings">
                     <i class="fas fa-money-bill-wave"></i> Ganha R$ ${model.monthlyEarnings.toFixed(2)}/mês
                 </div>
-                <button class="btn-view-model" data-id="${model.id}" onclick="trackGAEvent('view_model', {model_id: ${model.id}, model_name: '${model.name}'})">
+                <button class="btn-view-model" data-id="${model.id}" 
+                        onclick="trackGAEvent('view_model', {model_id: ${model.id}, model_name: '${model.name}', category: '${model.category}'})">
                     <i class="fas fa-eye"></i> Ver Perfil
                 </button>
             </div>
@@ -376,7 +402,8 @@ function loadModels() {
     });
 }
 
-// Funções de notificação
+// ==================== NOTIFICAÇÕES ====================
+
 function showNotification(message, type = 'info') {
     const notification = document.getElementById('successNotification');
     const icon = notification.querySelector('i');
@@ -404,14 +431,13 @@ function showNotification(message, type = 'info') {
     }, 5000);
 }
 
-// Funções de modal
+// ==================== MODAIS ====================
+
 function openModal(modal) {
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
     
-    // Rastrear abertura de modal no GA4
-    const modalType = modal.id === 'loginModal' ? 'login' : 
-                     modal.id === 'signupModal' ? 'signup' : 'modal';
+    const modalType = modal.id === 'loginModal' ? 'login' : 'signup';
     trackGAEvent(`open_${modalType}_modal`);
 }
 
@@ -420,7 +446,8 @@ function closeModal(modal) {
     document.body.style.overflow = 'auto';
 }
 
-// Menu mobile
+// ==================== MENU MOBILE ====================
+
 function toggleMobileMenu() {
     hamburger.classList.toggle('active');
     navMenu.classList.toggle('active');
@@ -432,17 +459,16 @@ function toggleMobileMenu() {
     }
 }
 
-// Função para inicializar Firebase Auth
+// ==================== AUTENTICAÇÃO FIREBASE ====================
+
 async function initFirebaseAuth() {
     try {
-        // Verificar se Firebase já está carregado
         if (typeof window.firebaseAuth !== 'undefined') {
             firebaseAuth = window.firebaseAuth;
-            console.log('Firebase Auth carregado com sucesso');
+            console.log('Firebase Auth carregado');
             return true;
         }
         
-        // Tentar carregar dinamicamente se não estiver disponível
         const firebaseModule = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js');
         const authModule = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js');
         
@@ -457,7 +483,6 @@ async function initFirebaseAuth() {
     }
 }
 
-// Autenticação com Firebase
 async function handleEmailLogin(e) {
     if (e) e.preventDefault();
     
@@ -470,7 +495,6 @@ async function handleEmailLogin(e) {
     }
     
     try {
-        // Tentar usar Firebase real se disponível
         if (await initFirebaseAuth() && firebaseAuth) {
             const authModule = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js');
             const userCredential = await authModule.signInWithEmailAndPassword(firebaseAuth, email, password);
@@ -485,7 +509,6 @@ async function handleEmailLogin(e) {
             
             showNotification(`Bem-vindo de volta, ${currentUser.name}!`, 'success');
         } else {
-            // Fallback para simulação
             currentUser = {
                 email: email,
                 name: email.split('@')[0],
@@ -498,7 +521,6 @@ async function handleEmailLogin(e) {
         
         localStorage.setItem('premiumContentUser', JSON.stringify(currentUser));
         
-        // Rastrear login no GA4
         trackGAEvent('login', {
             'method': 'email',
             'user_id': email
@@ -510,7 +532,6 @@ async function handleEmailLogin(e) {
     } catch (error) {
         console.error('Erro no login:', error);
         
-        // Fallback para simulação em caso de erro
         currentUser = {
             email: email,
             name: email.split('@')[0],
@@ -535,7 +556,6 @@ async function handleEmailSignup(e) {
     const ageConfirm = document.getElementById('ageConfirm')?.checked;
     const terms = document.getElementById('terms')?.checked;
     
-    // Validações
     if (!email || !password || !confirmPassword) {
         showNotification('Por favor, preencha todos os campos.', 'error');
         return;
@@ -567,7 +587,6 @@ async function handleEmailSignup(e) {
     }
     
     try {
-        // Tentar usar Firebase real se disponível
         if (await initFirebaseAuth() && firebaseAuth) {
             const authModule = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js');
             const userCredential = await authModule.createUserWithEmailAndPassword(firebaseAuth, email, password);
@@ -583,7 +602,6 @@ async function handleEmailSignup(e) {
             
             showNotification(`Cadastro realizado com sucesso! Bem-vindo(a) ${currentUser.name}!`, 'success');
         } else {
-            // Fallback para simulação
             currentUser = {
                 email: email,
                 name: email.split('@')[0],
@@ -597,7 +615,6 @@ async function handleEmailSignup(e) {
         
         localStorage.setItem('premiumContentUser', JSON.stringify(currentUser));
         
-        // Rastrear cadastro no GA4
         trackGAEvent('sign_up', {
             'method': 'email',
             'user_id': email
@@ -614,7 +631,6 @@ async function handleEmailSignup(e) {
         } else if (error.code === 'auth/weak-password') {
             showNotification('A senha é muito fraca. Use pelo menos 6 caracteres.', 'error');
         } else {
-            // Fallback para simulação em caso de erro
             currentUser = {
                 email: email,
                 name: email.split('@')[0],
@@ -637,7 +653,8 @@ function validateEmail(email) {
     return re.test(email);
 }
 
-// Atualizar interface do usuário
+// ==================== INTERFACE DO USUÁRIO ====================
+
 function updateUserInterface() {
     const navActions = document.querySelector('.nav-actions');
     
@@ -658,7 +675,6 @@ function updateUserInterface() {
             </div>
         `;
         
-        // Adicionar evento de logout
         document.getElementById('logoutBtn')?.addEventListener('click', handleLogout);
         setupUserDropdown();
     } else {
@@ -692,7 +708,6 @@ async function handleLogout(e) {
     if (e) e.preventDefault();
     
     try {
-        // Tentar logout no Firebase se disponível
         if (firebaseAuth) {
             const authModule = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js');
             await authModule.signOut(firebaseAuth);
@@ -701,7 +716,6 @@ async function handleLogout(e) {
         console.log('Logout Firebase não disponível, continuando...');
     }
     
-    // Rastrear logout no GA4
     trackGAEvent('logout', {
         'user_id': currentUser?.email
     });
@@ -713,7 +727,8 @@ async function handleLogout(e) {
     updateUserInterface();
 }
 
-// Rastrear conversões
+// ==================== STRIPE E CONVERSÕES ====================
+
 function trackConversion(planType) {
     if (!ageVerified) {
         showNotification('Por favor, verifique sua idade primeiro.', 'warning');
@@ -722,7 +737,6 @@ function trackConversion(planType) {
         return false;
     }
     
-    // Rastrear início do checkout no GA4
     const planValue = planType === 'monthly' ? 29.90 : planType === 'quarterly' ? 74.70 : 238.80;
     
     trackGAEvent('begin_checkout', {
@@ -737,7 +751,6 @@ function trackConversion(planType) {
         'user_id': currentUser?.email || 'guest'
     });
     
-    // Salvar dados temporários
     localStorage.setItem('lastSelectedPlan', planType);
     localStorage.setItem('checkoutTimestamp', Date.now());
     
@@ -745,7 +758,6 @@ function trackConversion(planType) {
     return true;
 }
 
-// Configurar links do Stripe
 function setupStripeLinks() {
     document.querySelectorAll('a[href*="stripe.com"]').forEach(link => {
         link.addEventListener('click', function(e) {
@@ -755,7 +767,6 @@ function setupStripeLinks() {
                 e.preventDefault();
                 e.stopPropagation();
             } else {
-                // Adicionar parâmetros de referência
                 const baseUrl = this.getAttribute('href');
                 const referrer = encodeURIComponent(window.location.href);
                 const userEmail = currentUser?.email ? encodeURIComponent(currentUser.email) : '';
@@ -773,7 +784,6 @@ function setupStripeLinks() {
     });
 }
 
-// Verificar retorno do Stripe
 function checkStripeReturn() {
     const urlParams = new URLSearchParams(window.location.search);
     const success = urlParams.get('success');
@@ -781,7 +791,6 @@ function checkStripeReturn() {
     const sessionId = urlParams.get('session_id');
     
     if (success === 'true' && sessionId) {
-        // Rastrear compra no GA4
         const planType = localStorage.getItem('lastSelectedPlan');
         if (planType) {
             const planValue = planType === 'monthly' ? 29.90 : planType === 'quarterly' ? 74.70 : 238.80;
@@ -811,7 +820,8 @@ function checkStripeReturn() {
     }
 }
 
-// Calculadora de ganhos
+// ==================== CALCULADORA DE GANHOS ====================
+
 function setupEarningsCalculator() {
     if (!subscribersRange) return;
     
@@ -831,7 +841,125 @@ function setupEarningsCalculator() {
     updateEarnings();
 }
 
-// Inicializar eventos
+// ==================== OTIMIZAÇÃO DE SEO ====================
+
+function optimizeSEO() {
+    // Atualizar título dinamicamente
+    document.title = `EliteContent Platform | ${document.title}`;
+    
+    // Adicionar structured data
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "EliteContent Platform",
+        "url": SITE_CONFIG.domain,
+        "description": "Plataforma premium de conteúdo adulto exclusivo brasileiro",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": `${SITE_CONFIG.domain}search?q={search_term_string}`,
+            "query-input": "required name=search_term_string"
+        }
+    };
+    
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(structuredData);
+    document.head.appendChild(script);
+    
+    // Preload critical images
+    ['assets/images/models/model-1.jpg', 
+     'assets/images/general/category-1.jpg'].forEach(src => {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = src;
+        document.head.appendChild(link);
+    });
+}
+
+// ==================== VERIFICAÇÃO DE IMAGENS ====================
+
+function checkImages() {
+    console.log('🖼️ Verificando imagens...');
+    
+    const images = [
+        'assets/images/models/model-1.jpg',
+        'assets/images/models/model-2.jpg',
+        'assets/images/models/model-3.jpg',
+        'assets/images/models/model-4.jpg',
+        'assets/images/models/model-5.jpg',
+        'assets/images/models/model-6.jpg',
+        'assets/images/general/category-1.jpg',
+        'assets/images/general/category-2.jpg',
+        'assets/images/general/category-3.jpg'
+    ];
+    
+    images.forEach(src => {
+        const img = new Image();
+        img.src = src;
+        img.onload = () => console.log(`✅ ${src} carregada`);
+        img.onerror = () => console.warn(`⚠️ ${src} não encontrada`);
+    });
+}
+
+// ==================== TRACKING DE OUTROS SITES ====================
+
+function setupOtherSitesTracking() {
+    document.querySelectorAll('a[href*="ruiveira.github.io/solucoes-rapidas"]').forEach(link => {
+        link.addEventListener('click', () => {
+            trackGAEvent('click_other_site', {
+                site_name: 'Soluções Rápidas',
+                site_url: SITE_CONFIG.otherSites.solucoesRapidas
+            });
+        });
+    });
+    
+    document.querySelectorAll('a[href*="guiaparamulheres.lovable.app"]').forEach(link => {
+        link.addEventListener('click', () => {
+            trackGAEvent('click_other_site', {
+                site_name: 'Guia para Mulheres',
+                site_url: SITE_CONFIG.otherSites.guiaMulheres
+            });
+        });
+    });
+}
+
+// ==================== CONTADORES ANIMADOS ====================
+
+function initAnimatedCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+    
+    counters.forEach(counter => {
+        const text = counter.textContent;
+        const target = parseInt(text.replace('+', ''));
+        const increment = target / 100;
+        let current = 0;
+        
+        const updateCounter = () => {
+            if (current < target) {
+                current += increment;
+                counter.textContent = Math.floor(current) + '+';
+                setTimeout(updateCounter, 20);
+            } else {
+                counter.textContent = target + '+';
+            }
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    updateCounter();
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+        
+        observer.observe(counter);
+    });
+}
+
+// ==================== INICIALIZAR EVENTOS ====================
+
 function initEventListeners() {
     // Verificação de idade
     confirmAgeBtn?.addEventListener('click', confirmAge);
@@ -927,9 +1055,13 @@ function initEventListeners() {
             trackGAEvent('view_category', {category: category});
         });
     });
+    
+    // Configurar tracking de outros sites
+    setupOtherSitesTracking();
 }
 
-// Inicializar a página
+// ==================== INICIALIZAR APLICAÇÃO ====================
+
 function init() {
     // Mostrar loader
     pageLoader.style.display = 'flex';
@@ -948,10 +1080,16 @@ function init() {
         }
     }
     
+    // Otimizar SEO
+    optimizeSEO();
+    
+    // Verificar imagens
+    checkImages();
+    
     // Inicializar Google Analytics
     setTimeout(() => {
         initGoogleAnalytics();
-    }, 1500);
+    }, 1000);
     
     // Carregar modelos
     loadModels();
@@ -965,6 +1103,9 @@ function init() {
     // Atualizar interface
     updateUserInterface();
     
+    // Inicializar contadores animados
+    initAnimatedCounters();
+    
     // Esconder loader
     setTimeout(() => {
         pageLoader.style.display = 'none';
@@ -972,54 +1113,31 @@ function init() {
         // Rastrear página carregada
         trackGAEvent('page_loaded', {
             'page_title': document.title,
-            'page_path': window.location.pathname
-        });
-    }, 1000);
-    
-    // Inicializar contadores animados
-    initAnimatedCounters();
-}
-
-// Contadores animados
-function initAnimatedCounters() {
-    const counters = document.querySelectorAll('.stat-number');
-    
-    counters.forEach(counter => {
-        const text = counter.textContent;
-        const target = parseInt(text.replace('+', ''));
-        const increment = target / 100;
-        let current = 0;
-        
-        const updateCounter = () => {
-            if (current < target) {
-                current += increment;
-                counter.textContent = Math.floor(current) + '+';
-                setTimeout(updateCounter, 20);
-            } else {
-                counter.textContent = target + '+';
-            }
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    updateCounter();
-                    observer.unobserve(entry.target);
-                }
-            });
+            'page_path': window.location.pathname,
+            'domain': SITE_CONFIG.domain
         });
         
-        observer.observe(counter);
-    });
+        // Rastrear se imagens carregaram
+        trackGAEvent('images_loaded', {
+            'total_images': 9,
+            'domain': SITE_CONFIG.domain
+        });
+    }, 1500);
 }
 
-// Inicializar quando o DOM carregar
+// ==================== INICIALIZAR QUANDO O DOM CARREGAR ====================
+
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
 } else {
     init();
 }
 
-// Exportar funções para uso global
+// ==================== EXPORTAR FUNÇÕES PARA USO GLOBAL ====================
+
 window.trackGAEvent = trackGAEvent;
 window.gaDebug = gaDebug;
+window.confirmAge = confirmAge;
+window.denyAge = denyAge;
+window.openModal = openModal;
+window.closeModal = closeModal;

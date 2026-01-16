@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /assets/admin/
+
+Sitemap: https://ruiveira.github.io/elitecontent-platform/sitemap.xml

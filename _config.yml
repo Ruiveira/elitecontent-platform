@@ -1,0 +1,21 @@
+title: EliteContent Platform
+description: Plataforma premium de conteúdo adulto exclusivo
+baseurl: "/elitecontent-platform"
+url: "https://ruiveira.github.io"
+theme: jekyll-theme-minimal
+
+plugins:
+  - jekyll-sitemap
+
+# Configurações customizadas
+google_analytics: G-50YVJJ0MEC
+stripe_key: pk_live_51J...
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/
+  - .git/
+  - .github/
