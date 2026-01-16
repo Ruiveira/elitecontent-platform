@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento Confirmado - EliteContent</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="success-page">
+        <div class="container">
+            <div class="success-content">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h1>Pagamento Confirmado!</h1>
+                <p class="success-message">
+                    Sua assinatura foi ativada com sucesso. Você agora tem acesso completo a todo conteúdo premium.
+                </p>
+                <div class="success-details">
+                    <div class="detail">
+                        <span class="label">Plano:</span>
+                        <span class="value" id="planName">Plano Premium</span>
+                    </div>
+                    <div class="detail">
+                        <span class="label">Valor:</span>
+                        <span class="value" id="planPrice">R$ 29,90</span>
+                    </div>
+                    <div class="detail">
+                        <span class="label">Próxima cobrança:</span>
+                        <span class="value" id="nextBilling">30 dias</span>
+                    </div>
+                </div>
+                <div class="success-actions">
+                    <a href="../index.html" class="btn-success">
+                        <i class="fas fa-home"></i> Ir para a Plataforma
+                    </a>
+                    <a href="../models/models.html" class="btn-success secondary">
+                        <i class="fas fa-users"></i> Ver Modelos
+                    </a>
+                </div>
+                <div class="success-note">
+                    <p><i class="fas fa-envelope"></i> Um e-mail de confirmação foi enviado para você.</p>
+                    <p><i class="fas fa-headset"></i> Dúvidas? Entre em contato com nosso suporte.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Preencher detalhes do plano
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const plan = urlParams.get('plan') || 'monthly';
+            const sessionId = urlParams.get('session_id');
+            
+            const plans = {
+                monthly: { name: 'Plano Mensal', price: 'R$ 29,90', next: '30 dias' },
+                quarterly: { name: 'Plano Trimestral', price: 'R$ 74,70', next: '90 dias' },
+                yearly: { name: 'Plano Anual', price: 'R$ 238,80', next: '365 dias' }
+            };
+            
+            const selectedPlan = plans[plan] || plans.monthly;
+            
+            document.getElementById('planName').textContent = selectedPlan.name;
+            document.getElementById('planPrice').textContent = selectedPlan.price;
+            document.getElementById('nextBilling').textContent = selectedPlan.next;
+            
+            // Registrar conversão
+            if (sessionId) {
+                gtag('event', 'purchase', {
+                    'transaction_id': sessionId,
+                    'currency': 'BRL',
+                    'value': plan === 'monthly' ? 29.90 : plan === 'quarterly' ? 74.70 : 238.80,
+                    'items': [{
+                        'item_id': plan,
+                        'item_name': selectedPlan.name
+                    }]
+                });
+            }
+        });
+    </script>
+</body>
+</html>

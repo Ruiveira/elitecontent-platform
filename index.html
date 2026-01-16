@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EliteContent | Conteúdo Exclusivo Premium</title>
+    
+    <!-- Google tag (gtag.js) - SEU ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M7H5H9LX2E"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-M7H5H9LX2E');
+    </script>
+    
+    <!-- Estilos e Fontes -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Oswald:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="Plataforma premium de conteúdo adulto exclusivo. Assine e tenha acesso a modelos, vídeos e fotos exclusivas.">
+    <meta name="keywords" content="conteúdo adulto, premium, assinatura, modelos, vídeos exclusivos">
+    <meta name="author" content="EliteContent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="EliteContent | Conteúdo Premium Exclusivo">
+    <meta property="og:description" content="Acesso ilimitado aos melhores criadores de conteúdo adulto premium">
+    <meta property="og:image" content="https://elitecontent.com/assets/og-image.jpg">
+    <meta property="og:url" content="https://elitecontent.com">
+    <meta property="og:type" content="website">
+    
+    <!-- CSP para Analytics -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://www.google-analytics.com https://www.googletagmanager.com; script-src 'self' 'unsafe-inline' https://www.google-analytics.com https://www.googletagmanager.com;">
+</head>
+<body>
+    <!-- Age Verification Modal -->
+    <div class="age-verification" id="ageVerification">
+        <div class="age-modal">
+            <div class="age-content">
+                <h2><i class="fas fa-exclamation-triangle"></i> Verificação de Idade</h2>
+                <p>Este site contém material para adultos. Você deve ter 18 anos ou mais para acessar.</p>
+                <p>Ao entrar, você confirma que:</p>
+                <ul>
+                    <li>Tem 18 anos ou mais</li>
+                    <li>Não se ofende com conteúdo adulto</li>
+                    <li>Está acessando de acordo com as leis do seu país</li>
+                </ul>
+                <div class="age-buttons">
+                    <button id="confirmAge" class="btn-age confirm">Tenho 18 anos ou mais</button>
+                    <button id="denyAge" class="btn-age deny">Sair do Site</button>
+                </div>
+                <p class="age-warning"><i class="fas fa-shield-alt"></i> Seus dados são protegidos pela Lei Geral de Proteção de Dados (LGPD)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-crown"></i> Elite<span>Content</span>
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="#home" class="nav-link">Início</a></li>
+                    <li><a href="models/models.html" class="nav-link">Modelos</a></li>
+                    <li><a href="#categories" class="nav-link">Categorias</a></li>
+                    <li><a href="#pricing" class="nav-link">Planos</a></li>
+                    <li><a href="#creators" class="nav-link">Para Criadores</a></li>
+                    <li class="nav-actions">
+                        <a href="#" class="btn-login" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Entrar</a>
+                        <a href="#pricing" class="btn-subscribe"><i class="fas fa-gem"></i> Assinar Agora</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-background"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Conteúdo <span>Exclusivo</span> Premium</h1>
+                <p class="hero-subtitle">Acesso ilimitado aos melhores criadores de conteúdo adulto premium. Mais de 10.000 vídeos em 4K, fotos profissionais e transmissões ao vivo.</p>
+                <div class="hero-actions">
+                    <a href="#pricing" class="btn-hero" onclick="trackGAEvent('click_cta', {location: 'hero'})">
+                        <i class="fas fa-rocket"></i> Comece Agora - R$29,90/mês
+                    </a>
+                    <a href="#features" class="btn-hero-secondary">
+                        <i class="fas fa-play-circle"></i> Ver Vídeo de Apresentação
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Modelos Premium</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">10K+</span>
+                        <span class="stat-label">Vídeos Exclusivos</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">98%</span>
+                        <span class="stat-label">Satisfação</span>
+                    </div>
+                </div>
+                <div class="trust-badges">
+                    <div class="badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Site Seguro</span>
+                    </div>
+                    <div class="badge">
+                        <i class="fas fa-lock"></i>
+                        <span>Pagamento Criptografado</span>
+                    </div>
+                    <div class="badge">
+                        <i class="fas fa-user-clock"></i>
+                        <span>Suporte 24/7</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Model Explanation -->
+    <section class="business-model">
+        <div class="container">
+            <h2 class="section-title">Como Funciona a Monetização</h2>
+            <p class="section-subtitle">Entenda nossa estrutura de pagamentos e ganhos</p>
+            
+            <div class="model-cards">
+                <div class="model-card">
+                    <div class="model-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Para Assinantes</h3>
+                    <p>Você paga uma assinatura mensal e tem acesso a TODO o conteúdo da plataforma</p>
+                    <ul>
+                        <li><strong>Valor:</strong> R$29,90/mês</li>
+                        <li><strong>Vantagem:</strong> Acesso ilimitado</li>
+                        <li><strong>Benefício:</strong> Custo fixo, sem surpresas</li>
+                    </ul>
+                </div>
+                
+                <div class="model-card">
+                    <div class="model-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Para a Plataforma</h3>
+                    <p>Nós recebemos 30% das assinaturas para manter e melhorar a plataforma</p>
+                    <ul>
+                        <li><strong>Receita:</strong> 30% das assinaturas</li>
+                        <li><strong>Investimento:</strong> Tecnologia e marketing</li>
+                        <li><strong>Responsabilidade:</strong> Suporte e segurança</li>
+                    </ul>
+                </div>
+                
+                <div class="model-card">
+                    <div class="model-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Para os Criadores</h3>
+                    <p>Os criadores recebem 70% do valor da assinatura proporcional ao seu engajamento</p>
+                    <ul>
+                        <li><strong>Ganho:</strong> Até 70% da receita</li>
+                        <li><strong>Pagamento:</strong> Mensal via PIX ou Stripe</li>
+                        <li><strong>Bônus:</strong> Comissões extras por conteúdo exclusivo</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="model-example">
+                <h3>Exemplo Prático:</h3>
+                <div class="example-cards">
+                    <div class="example-card">
+                        <h4>1. Você Assina</h4>
+                        <p class="price">R$ 29,90</p>
+                        <p>Pagamento mensal recorrente</p>
+                    </div>
+                    <div class="example-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="example-card">
+                        <h4>2. Plataforma Recebe</h4>
+                        <p class="price">R$ 8,97</p>
+                        <p>(30% para infraestrutura)</p>
+                    </div>
+                    <div class="example-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="example-card">
+                        <h4>3. Criadores Recebem</h4>
+                        <p class="price">R$ 20,93</p>
+                        <p>(70% distribuído proporcionalmente)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="model-benefits">
+                <h3>Benefícios para Todos:</h3>
+                <div class="benefits-grid">
+                    <div class="benefit">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Para você: Custo fixo e previsível</span>
+                    </div>
+                    <div class="benefit">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Para nós: Sustentabilidade do negócio</span>
+                    </div>
+                    <div class="benefit">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Para criadores: Renda recorrente garantida</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Por que escolher a EliteContent?</h2>
+            <p class="section-subtitle">A plataforma mais completa para conteúdo adulto premium</p>
+            <div class="features-grid">
+                <div class="feature-card" onclick="trackGAEvent('view_feature', {feature: '4k'})">
+                    <div class="feature-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>Conteúdo em 4K</h3>
+                    <p>Vídeos na mais alta qualidade disponível no mercado, com áudio imersivo.</p>
+                </div>
+                <div class="feature-card" onclick="trackGAEvent('view_feature', {feature: 'lives'})">
+                    <div class="feature-icon">
+                        <i class="fas fa-broadcast-tower"></i>
+                    </div>
+                    <h3>Lives Diárias</h3>
+                    <p>Transmissões ao vivo exclusivas com interação em tempo real.</p>
+                </div>
+                <div class="feature-card" onclick="trackGAEvent('view_feature', {feature: 'mobile'})">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Aplicativo Mobile</h3>
+                    <p>Acesse de qualquer dispositivo, com experiência otimizada.</p>
+                </div>
+                <div class="feature-card" onclick="trackGAEvent('view_feature', {feature: 'privacy'})">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h3>Privacidade Total</h3>
+                    <p>Seus dados e atividades são completamente confidenciais.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Models Preview Section -->
+    <section class="models-preview">
+        <div class="container">
+            <h2 class="section-title">Modelos em Destaque</h2>
+            <p class="section-subtitle">Conheça algumas das nossas estrelas mais populares</p>
+            <div class="models-grid" id="modelsGrid">
+                <!-- Models loaded by JavaScript -->
+            </div>
+            <div class="text-center">
+                <a href="models/models.html" class="btn-view-all" onclick="trackGAEvent('click_view_all_models')">
+                    <i class="fas fa-users"></i> Ver Todos os Modelos
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section with Stripe Integration -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Escolha Seu Plano</h2>
+            <p class="section-subtitle">Assine agora e tenha acesso imediato a todo conteúdo</p>
+            
+            <div class="pricing-notice">
+                <i class="fas fa-bolt"></i>
+                <span>OFERTA ESPECIAL: 7 dias de garantia ou seu dinheiro de volta!</span>
+            </div>
+            
+            <div class="pricing-grid">
+                <!-- Monthly Plan -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Plano Mensal</h3>
+                        <div class="price">R$ <span>29,90</span>/mês</div>
+                        <p class="billing-info">Renovação mensal automática</p>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Acesso a 500+ modelos</li>
+                            <li><i class="fas fa-check"></i> +10.000 vídeos em HD</li>
+                            <li><i class="fas fa-check"></i> Galeria de fotos exclusivas</li>
+                            <li><i class="fas fa-check"></i> 2 lives por semana</li>
+                            <li><i class="fas fa-times"></i> Chat privado ilimitado</li>
+                        </ul>
+                    </div>
+                    <a href="https://buy.stripe.com/7sYbITfD4aLV7ur9TV4c80z" 
+                       class="btn-pricing" 
+                       target="_blank"
+                       data-plan="monthly"
+                       onclick="trackGAEvent('select_plan', {plan: 'monthly', value: 29.90})">
+                        <i class="fas fa-credit-card"></i> Assinar Agora
+                    </a>
+                    <p class="stripe-secure">
+                        <i class="fas fa-lock"></i> Pagamento seguro via Stripe
+                    </p>
+                </div>
+
+                <!-- Quarterly Plan (Most Popular) -->
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">MAIS POPULAR</div>
+                    <div class="pricing-header">
+                        <h3>Plano Trimestral</h3>
+                        <div class="price">R$ <span>24,90</span>/mês</div>
+                        <p class="billing-info">Cobrado trimestralmente (R$74,70)</p>
+                        <p class="savings">Economize 17%</p>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Tudo do plano mensal</li>
+                            <li><i class="fas fa-check"></i> Chat privado (30 min/dia)</li>
+                            <li><i class="fas fa-check"></i> Lives ilimitadas</li>
+                            <li><i class="fas fa-check"></i> Conteúdo em 4K</li>
+                            <li><i class="fas fa-check"></i> Desconto em PPV</li>
+                        </ul>
+                    </div>
+                    <a href="https://buy.stripe.com/00wdR19eGbPZ5mj1np4c80A" 
+                       class="btn-pricing featured" 
+                       target="_blank"
+                       data-plan="quarterly"
+                       onclick="trackGAEvent('select_plan', {plan: 'quarterly', value: 74.70})">
+                        <i class="fas fa-crown"></i> Assinar Agora
+                    </a>
+                    <p class="stripe-secure">
+                        <i class="fas fa-lock"></i> Pagamento seguro via Stripe
+                    </p>
+                </div>
+
+                <!-- Yearly Plan -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Plano Anual</h3>
+                        <div class="price">R$ <span>19,90</span>/mês</div>
+                        <p class="billing-info">Cobrado anualmente (R$238,80)</p>
+                        <p class="savings">Economize 34%</p>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Tudo do plano trimestral</li>
+                            <li><i class="fas fa-check"></i> Chat privado ilimitado</li>
+                            <li><i class="fas fa-check"></i> Conteúdo antecipado</li>
+                            <li><i class="fas fa-check"></i> Sessões exclusivas</li>
+                            <li><i class="fas fa-check"></i> Presentes mensais</li>
+                        </ul>
+                    </div>
+                    <a href="https://buy.stripe.com/28E00b76y8DN7ur4zB4c80B" 
+                       class="btn-pricing" 
+                       target="_blank"
+                       data-plan="yearly"
+                       onclick="trackGAEvent('select_plan', {plan: 'yearly', value: 238.80})">
+                        <i class="fas fa-gem"></i> Assinar Agora
+                    </a>
+                    <p class="stripe-secure">
+                        <i class="fas fa-lock"></i> Pagamento seguro via Stripe
+                    </p>
+                </div>
+            </div>
+
+            <!-- Payment Methods -->
+            <div class="payment-methods">
+                <p>Aceitamos todos os principais cartões:</p>
+                <div class="payment-icons">
+                    <i class="fab fa-cc-visa" title="Visa"></i>
+                    <i class="fab fa-cc-mastercard" title="Mastercard"></i>
+                    <i class="fab fa-cc-amex" title="American Express"></i>
+                    <i class="fab fa-cc-paypal" title="PayPal"></i>
+                    <i class="fab fa-cc-apple-pay" title="Apple Pay"></i>
+                    <i class="fab fa-cc-google-pay" title="Google Pay"></i>
+                </div>
+                <p class="payment-note">
+                    <i class="fas fa-info-circle"></i> Seu pagamento é processado com segurança pela Stripe. Não armazenamos dados do cartão.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- For Creators Section -->
+    <section class="creators" id="creators">
+        <div class="container">
+            <div class="creators-content">
+                <div class="creators-text">
+                    <h2>Ganhe Dinheiro como Criador</h2>
+                    <p>Junte-se à nossa plataforma e comece a ganhar dinheiro com seu conteúdo. Oferecemos as melhores taxas do mercado.</p>
+                    
+                    <div class="earnings-calculator">
+                        <h3><i class="fas fa-calculator"></i> Calculadora de Ganhos</h3>
+                        <div class="calculator-input">
+                            <label>Seus assinantes:</label>
+                            <input type="range" id="subscribersRange" min="10" max="1000" value="100" step="10">
+                            <span id="subscribersValue">100 assinantes</span>
+                        </div>
+                        <div class="calculator-results">
+                            <div class="result">
+                                <span class="label">Sua receita mensal:</span>
+                                <span class="value" id="monthlyEarnings">R$ 2.093,00</span>
+                            </div>
+                            <div class="result">
+                                <span class="label">Sua receita anual:</span>
+                                <span class="value" id="yearlyEarnings">R$ 25.116,00</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="payout-methods">
+                        <h4><i class="fas fa-money-bill-wave"></i> Formas de Pagamento:</h4>
+                        <div class="methods">
+                            <div class="method">
+                                <i class="fab fa-pix"></i>
+                                <span>PIX Instantâneo</span>
+                            </div>
+                            <div class="method">
+                                <i class="fab fa-stripe"></i>
+                                <span>Stripe Transfer</span>
+                            </div>
+                            <div class="method">
+                                <i class="fas fa-university"></i>
+                                <span>TED/DOC</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="creators/apply.html" class="btn-creators" onclick="trackGAEvent('click_become_creator')">
+                        <i class="fas fa-user-plus"></i> Tornar-se Criador
+                    </a>
+                </div>
+                <div class="creators-image">
+                    <div class="image-placeholder">
+                        <i class="fas fa-chart-line fa-4x"></i>
+                        <h3>Dashboard de Ganhos</h3>
+                        <p>Controle total sobre seus rendimentos em tempo real</p>
+                        <div class="stats">
+                            <div class="stat">
+                                <span class="number">70%</span>
+                                <span class="label">Comissão</span>
+                            </div>
+                            <div class="stat">
+                                <span class="number">24h</span>
+                                <span class="label">Pagamento</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <h2 class="section-title">Perguntas Frequentes</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3 class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        Como funciona o pagamento para criadores?
+                    </h3>
+                    <p class="faq-answer">Os criadores recebem 70% da receita gerada por seus assinantes. Os pagamentos são feitos mensalmente via PIX, Stripe ou transferência bancária.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        Quanto tempo leva para receber o pagamento?
+                    </h3>
+                    <p class="faq-answer">Os pagamentos são processados no dia 5 de cada mês para o período anterior. O dinheiro cai em até 24 horas após o processamento.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        Posso cancelar a qualquer momento?
+                    </h3>
+                    <p class="faq-answer">Sim! Assinantes podem cancelar a qualquer momento. Criadores podem encerrar sua conta após o ciclo de pagamento atual.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        Como é calculado o ganho dos criadores?
+                    </h3>
+                    <p class="faq-answer">Seus ganhos = (70% da assinatura) × (seu tempo de visualização ÷ tempo total de visualização da plataforma). Quanto mais seu conteúdo é consumido, mais você ganha!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Pronto para a experiência premium?</h2>
+                <p>Junte-se a mais de 50.000 membros satisfeitos. Assine agora e tenha acesso imediato.</p>
+                <a href="#pricing" class="btn-cta" onclick="trackGAEvent('click_final_cta')">
+                    <i class="fas fa-gem"></i> Começar Agora
+                </a>
+                <p class="cta-note">
+                    <i class="fas fa-shield-alt"></i> 100% seguro • 7 dias de garantia • Cancelamento fácil
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="logo-footer">
+                        <i class="fas fa-crown"></i> Elite<span>Content</span>
+                    </a>
+                    <p>A plataforma líder em conteúdo adulto premium com foco na segurança e experiência do usuário.</p>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Twitter" onclick="trackGAEvent('social_click', {network: 'twitter'})"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram" onclick="trackGAEvent('social_click', {network: 'instagram'})"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Telegram" onclick="trackGAEvent('social_click', {network: 'telegram'})"><i class="fab fa-telegram"></i></a>
+                        <a href="#" aria-label="YouTube" onclick="trackGAEvent('social_click', {network: 'youtube'})"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Conteúdo</h3>
+                    <ul>
+                        <li><a href="models/models.html">Modelos</a></li>
+                        <li><a href="#categories">Categorias</a></li>
+                        <li><a href="#features">Recursos</a></li>
+                        <li><a href="#pricing">Planos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Para Criadores</h3>
+                    <ul>
+                        <li><a href="creators/apply.html">Torne-se Criador</a></li>
+                        <li><a href="creators/earnings.html">Calculadora de Ganhos</a></li>
+                        <li><a href="creators/guide.html">Guia para Criadores</a></li>
+                        <li><a href="creators/support.html">Suporte para Criadores</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Suporte</h3>
+                    <ul>
+                        <li><a href="mailto:support@elitecontent.com">support@elitecontent.com</a></li>
+                        <li><a href="#" id="helpLink">Central de Ajuda</a></li>
+                        <li><a href="#" id="contactLink">Contato</a></li>
+                        <li><a href="#creators">Para Criadores</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 EliteContent. Todos os direitos reservados.</p>
+                <p class="age-warning">
+                    <i class="fas fa-exclamation-triangle"></i> 
+                    AVISO: Este site contém material para adultos. Acesso permitido apenas para maiores de 18 anos.
+                </p>
+                <p class="disclaimer">
+                    Os pagamentos são processados pela Stripe Payments Company. EliteContent não armazenamos dados de cartão de crédito.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2><i class="fas fa-sign-in-alt"></i> Entrar na EliteContent</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> E-mail</label>
+                    <input type="email" id="email" placeholder="seu@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Senha</label>
+                    <input type="password" id="password" placeholder="Sua senha" required>
+                    <div class="password-toggle">
+                        <i class="fas fa-eye" id="togglePassword"></i>
+                    </div>
+                </div>
+                <div class="form-options">
+                    <label class="checkbox">
+                        <input type="checkbox" id="rememberMe">
+                        <span>Lembrar de mim</span>
+                    </label>
+                    <a href="#" class="forgot-password">Esqueci minha senha</a>
+                </div>
+                <button type="submit" class="btn-submit" onclick="trackGAEvent('submit_login_form')">
+                    <i class="fas fa-sign-in-alt"></i> Entrar
+                </button>
+                <p class="form-footer">
+                    Não tem uma conta? 
+                    <a href="#" class="signup-link">Cadastre-se gratuitamente</a>
+                </p>
+                <div class="social-login">
+                    <p>Ou entre com:</p>
+                    <div class="social-buttons">
+                        <button type="button" class="btn-social google" id="googleLogin" onclick="trackGAEvent('click_login_social', {provider: 'google'})">
+                            <i class="fab fa-google"></i> Google
+                        </button>
+                        <button type="button" class="btn-social x" id="xLogin" onclick="trackGAEvent('click_login_social', {provider: 'x'})">
+                            <i class="fab fa-x-twitter"></i> X (Twitter)
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2><i class="fas fa-user-plus"></i> Criar Conta</h2>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="signupEmail"><i class="fas fa-envelope"></i> E-mail</label>
+                    <input type="email" id="signupEmail" placeholder="seu@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword"><i class="fas fa-lock"></i> Senha</label>
+                    <input type="password" id="signupPassword" placeholder="Mínimo 8 caracteres" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword"><i class="fas fa-lock"></i> Confirmar Senha</label>
+                    <input type="password" id="confirmPassword" placeholder="Digite novamente" required>
+                </div>
+                <div class="form-checkboxes">
+                    <label class="checkbox">
+                        <input type="checkbox" id="ageConfirm" required>
+                        <span>Confirmo que tenho 18 anos ou mais</span>
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" id="terms" required>
+                        <span>Aceito os <a href="#" class="terms-link">Termos de Serviço</a> e <a href="#" class="privacy-link">Política de Privacidade</a></span>
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" id="newsletter">
+                        <span>Desejo receber ofertas exclusivas por e-mail</span>
+                    </label>
+                </div>
+                <button type="submit" class="btn-submit" onclick="trackGAEvent('submit_signup_form')">
+                    <i class="fas fa-user-plus"></i> Criar Conta
+                </button>
+                <p class="form-footer">
+                    Já tem uma conta? 
+                    <a href="#" class="login-link">Faça login</a>
+                </p>
+                <div class="social-login">
+                    <p>Ou cadastre-se com:</p>
+                    <div class="social-buttons">
+                        <button type="button" class="btn-social google" id="googleSignup" onclick="trackGAEvent('click_signup_social', {provider: 'google'})">
+                            <i class="fab fa-google"></i> Google
+                        </button>
+                        <button type="button" class="btn-social x" id="xSignup" onclick="trackGAEvent('click_signup_social', {provider: 'x'})">
+                            <i class="fab fa-x-twitter"></i> X (Twitter)
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Notification -->
+    <div class="notification" id="successNotification">
+        <div class="notification-content">
+            <i class="fas fa-check-circle"></i>
+            <span>Redirecionando para o pagamento seguro...</span>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="loader" id="pageLoader">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <!-- Stripe Integration -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <!-- Firebase para autenticação social -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    
+    <!-- Analytics Debug Console -->
+    <div id="gaDebugConsole"></div>
+</body>
+</html>

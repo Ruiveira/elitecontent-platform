@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelos Premium - EliteContent</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Oswald:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Age Verification Modal (mesmo código do index.html) -->
+    <div class="age-verification" id="ageVerification">
+        <div class="age-modal">
+            <div class="age-content">
+                <h2><i class="fas fa-exclamation-triangle"></i> Verificação de Idade</h2>
+                <p>Este site contém material para adultos. Você deve ter 18 anos ou mais para acessar.</p>
+                <div class="age-buttons">
+                    <button id="confirmAge" class="btn-age confirm">Tenho 18 anos ou mais</button>
+                    <button id="denyAge" class="btn-age deny">Sair do Site</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="../index.html" class="logo">
+                    <i class="fas fa-crown"></i> Elite<span>Content</span>
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="../index.html" class="nav-link">Início</a></li>
+                    <li><a href="models.html" class="nav-link active">Modelos</a></li>
+                    <li><a href="../index.html#categories" class="nav-link">Categorias</a></li>
+                    <li><a href="../index.html#pricing" class="nav-link">Planos</a></li>
+                    <li class="nav-actions" id="navActions">
+                        <!-- Será preenchido pelo JavaScript -->
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Models Page Content -->
+    <section class="models-page">
+        <div class="container">
+            <div class="page-header">
+                <h1>Nossos Modelos Premium</h1>
+                <p>Conheça as estrelas mais populares da plataforma</p>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="categoryFilter"><i class="fas fa-filter"></i> Categoria:</label>
+                    <select id="categoryFilter">
+                        <option value="all">Todas as Categorias</option>
+                        <option value="latina">Latinas</option>
+                        <option value="europeia">Europeias</option>
+                        <option value="asiatica">Asiáticas</option>
+                        <option value="afro">Afro</option>
+                        <option value="russa">Russas</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="sortFilter"><i class="fas fa-sort"></i> Ordenar por:</label>
+                    <select id="sortFilter">
+                        <option value="popular">Mais Populares</option>
+                        <option value="new">Mais Novos</option>
+                        <option value="rating">Melhor Avaliados</option>
+                        <option value="online">Online Agora</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <button class="btn-filter" id="applyFilters">
+                        <i class="fas fa-check"></i> Aplicar Filtros
+                    </button>
+                    <button class="btn-filter secondary" id="resetFilters">
+                        <i class="fas fa-redo"></i> Limpar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Models Grid -->
+            <div class="models-grid-full" id="modelsGridFull">
+                <!-- Models loaded by JavaScript -->
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="page-btn" disabled>
+                    <i class="fas fa-chevron-left"></i> Anterior
+                </button>
+                <div class="page-numbers">
+                    <span class="page-number active">1</span>
+                    <span class="page-number">2</span>
+                    <span class="page-number">3</span>
+                    <span class="page-number">4</span>
+                    <span class="page-number">5</span>
+                </div>
+                <button class="page-btn">
+                    Próxima <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <!-- CTA -->
+            <div class="models-cta">
+                <h2>Pronto para ver conteúdo exclusivo?</h2>
+                <p>Assine agora e tenha acesso completo a todos os modelos</p>
+                <a href="../index.html#pricing" class="btn-cta">
+                    <i class="fas fa-gem"></i> Assinar Agora
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="../index.html" class="logo-footer">
+                        <i class="fas fa-crown"></i> Elite<span>Content</span>
+                    </a>
+                    <p>A plataforma líder em conteúdo adulto premium</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="../index.html">Início</a></li>
+                        <li><a href="models.html">Modelos</a></li>
+                        <li><a href="../index.html#pricing">Planos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Termos de Serviço</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 EliteContent. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../script.js"></script>
+    <script>
+        // Código específico para a página de modelos
+        document.addEventListener('DOMContentLoaded', function() {
+            // Carregar modelos
+            loadAllModels();
+            
+            // Configurar filtros
+            setupFilters();
+        });
+
+        function loadAllModels() {
+            const modelsGrid = document.getElementById('modelsGridFull');
+            if (!modelsGrid) return;
+
+            // Dados extendidos de modelos
+            const allModels = [
+                ...models, // Os 6 modelos do script principal
+                // Adicionar mais modelos
+                { id: 7, name: "Camila Silva", category: "Latina", videos: 145, photos: 923, isOnline: true, rating: 4.8 },
+                { id: 8, name: "Natalia Ivanova", category: "Russa", videos: 92, photos: 678, isOnline: false, rating: 4.7 },
+                { id: 9, name: "Sakura Tanaka", category: "Asiática", videos: 78, photos: 512, isOnline: true, rating: 4.9 },
+                { id: 10, name: "Chloe Dubois", category: "Europeia", videos: 112, photos: 789, isOnline: true, rating: 4.8 },
+                { id: 11, name: "Zara Johnson", category: "Afro", videos: 87, photos: 634, isOnline: false, rating: 4.6 },
+                { id: 12, name: "Isabella Rossi", category: "Latina", videos: 134, photos: 845, isOnline: true, rating: 4.9 }
+            ];
+
+            modelsGrid.innerHTML = '';
+            
+            allModels.forEach(model => {
+                const modelCard = document.createElement('div');
+                modelCard.className = 'model-card';
+                modelCard.setAttribute('data-id', model.id);
+                modelCard.setAttribute('data-category', model.category.toLowerCase());
+                
+                modelCard.innerHTML = `
+                    <div class="model-image">
+                        <i class="fas fa-user-circle"></i>
+                        ${model.isOnline ? '<span class="online-badge">● ONLINE</span>' : ''}
+                    </div>
+                    <div class="model-info">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div>
+                                <h3 class="model-name">${model.name}</h3>
+                                <span class="model-category">${model.category}</span>
+                            </div>
+                            <div class="model-rating">
+                                <i class="fas fa-star"></i> ${model.rating}
+                            </div>
+                        </div>
+                        <div class="model-stats">
+                            <span><i class="fas fa-video"></i> ${model.videos} vídeos</span>
+                            <span><i class="fas fa-camera"></i> ${model.photos} fotos</span>
+                        </div>
+                        <div class="model-actions">
+                            <button class="btn-view-profile" data-id="${model.id}">
+                                <i class="fas fa-eye"></i> Ver Perfil
+                            </button>
+                            ${model.isOnline ? 
+                                '<button class="btn-live" data-id="${model.id}"><i class="fas fa-broadcast-tower"></i> Live Agora</button>' : 
+                                ''
+                            }
+                        </div>
+                    </div>
+                `;
+                
+                modelsGrid.appendChild(modelCard);
+            });
+
+            // Adicionar eventos
+            document.querySelectorAll('.btn-view-profile').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const modelId = this.getAttribute('data-id');
+                    viewModelProfile(modelId);
+                });
+            });
+
+            document.querySelectorAll('.btn-live').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const modelId = this.getAttribute('data-id');
+                    joinModelLive(modelId);
+                });
+            });
+        }
+
+        function setupFilters() {
+            const applyBtn = document.getElementById('applyFilters');
+            const resetBtn = document.getElementById('resetFilters');
+            const categoryFilter = document.getElementById('categoryFilter');
+            const sortFilter = document.getElementById('sortFilter');
+
+            applyBtn?.addEventListener('click', function() {
+                const category = categoryFilter.value;
+                const sort = sortFilter.value;
+                
+                filterModels(category, sort);
+                
+                // Registrar evento
+                gtag('event', 'filter_models', {
+                    'category': category,
+                    'sort_by': sort
+                });
+            });
+
+            resetBtn?.addEventListener('click', function() {
+                categoryFilter.value = 'all';
+                sortFilter.value = 'popular';
+                filterModels('all', 'popular');
+            });
+        }
+
+        function filterModels(category, sort) {
+            const modelCards = document.querySelectorAll('.model-card');
+            let visibleCount = 0;
+
+            modelCards.forEach(card => {
+                const modelCategory = card.getAttribute('data-category');
+                const isVisible = category === 'all' || modelCategory === category;
+                
+                card.style.display = isVisible ? 'block' : 'none';
+                if (isVisible) visibleCount++;
+            });
+
+            // Ordenar modelos visíveis
+            if (sort !== 'popular') {
+                // Implementar lógica de ordenação
+            }
+
+            showNotification(`Mostrando ${visibleCount} modelos`, 'info');
+        }
+
+        function viewModelProfile(modelId) {
+            if (!currentUser) {
+                showNotification('Faça login para ver perfis completos', 'info');
+                // Abrir modal de login
+                return;
+            }
+            showNotification('Redirecionando para perfil do modelo...', 'info');
+        }
+
+        function joinModelLive(modelId) {
+            if (!currentUser) {
+                showNotification('Faça login para participar das lives', 'info');
+                return;
+            }
+            showNotification('Entrando na transmissão ao vivo...', 'info');
+        }
+    </script>
+</body>
+</html>

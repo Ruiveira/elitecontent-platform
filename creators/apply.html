@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torne-se Criador - EliteContent</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .creator-application {
+            padding: 100px 0;
+            background-color: var(--darker-bg);
+        }
+        
+        .application-steps {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 50px 0;
+            flex-wrap: wrap;
+        }
+        
+        .step {
+            text-align: center;
+            flex: 1;
+            min-width: 250px;
+            max-width: 300px;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+        
+        .requirements {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            margin: 50px 0;
+        }
+        
+        .requirements h3 {
+            margin-bottom: 25px;
+            color: var(--text-light);
+        }
+        
+        .requirements-list {
+            list-style: none;
+        }
+        
+        .requirements-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .requirements-list li i {
+            color: var(--success-color);
+            font-size: 1.2rem;
+        }
+        
+        .application-form {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            margin-top: 50px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .file-upload {
+            border: 2px dashed var(--primary-color);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .file-upload:hover {
+            background-color: rgba(255, 64, 129, 0.1);
+        }
+        
+        .file-upload i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .uploaded-files {
+            margin-top: 20px;
+        }
+        
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--darker-bg);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 10px;
+        }
+        
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .file-info i {
+            color: var(--primary-color);
+        }
+        
+        .remove-file {
+            background: none;
+            border: none;
+            color: var(--danger-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
+        .btn-submit-application {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        .btn-submit-application:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 64, 129, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .step {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header (mesmo do index.html) -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="../index.html" class="logo">
+                    <i class="fas fa-crown"></i> Elite<span>Content</span>
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="../index.html" class="nav-link">Início</a></li>
+                    <li><a href="../models/models.html" class="nav-link">Modelos</a></li>
+                    <li><a href="../index.html#pricing" class="nav-link">Planos</a></li>
+                    <li class="nav-actions">
+                        <a href="#" class="btn-login" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Entrar</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Application Section -->
+    <section class="creator-application">
+        <div class="container">
+            <div class="page-header">
+                <h1>Torne-se um Criador EliteContent</h1>
+                <p>Comece a ganhar dinheiro com seu conteúdo hoje mesmo</p>
+            </div>
+            
+            <!-- Earnings Calculator -->
+            <div class="earnings-calculator">
+                <h3><i class="fas fa-calculator"></i> Veja quanto você pode ganhar</h3>
+                <div class="calculator-input">
+                    <label>Seus assinantes:</label>
+                    <input type="range" id="subscribersRange" min="10" max="5000" value="100" step="10">
+                    <span id="subscribersValue">100 assinantes</span>
+                </div>
+                <div class="calculator-results">
+                    <div class="result">
+                        <span class="label">Sua receita mensal:</span>
+                        <span class="value" id="monthlyEarnings">R$ 2.093,00</span>
+                    </div>
+                    <div class="result">
+                        <span class="label">Sua receita anual:</span>
+                        <span class="value" id="yearlyEarnings">R$ 25.116,00</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Application Steps -->
+            <div class="application-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Crie sua Conta</h3>
+                    <p>Registre-se gratuitamente em menos de 2 minutos</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Envie seu Conteúdo</h3>
+                    <p>Faça upload de fotos e vídeos de qualidade</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Verificação</h3>
+                    <p>Nossa equipe aprova em até 48 horas</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Comece a Ganhar</h3>
+                    <p>Receba pagamentos mensais via PIX ou Stripe</p>
+                </div>
+            </div>
+            
+            <!-- Requirements -->
+            <div class="requirements">
+                <h3>Requisitos para se tornar um criador:</h3>
+                <ul class="requirements-list">
+                    <li><i class="fas fa-check-circle"></i> Ter 18 anos ou mais</li>
+                    <li><i class="fas fa-check-circle"></i> Documento de identidade válido</li>
+                    <li><i class="fas fa-check-circle"></i> Conta bancária ou PIX para recebimentos</li>
+                    <li><i class="fas fa-check-circle"></i> Conteúdo original e de sua autoria</li>
+                    <li><i class="fas fa-check-circle"></i> Qualidade mínima de vídeo: 720p</li>
+                    <li><i class="fas fa-check-circle"></i> Conteúdo em conformidade com nossos termos</li>
+                </ul>
+            </div>
+            
+            <!-- Application Form -->
+            <div class="application-form">
+                <h2>Formulário de Inscrição</h2>
+                <p>Preencha os dados abaixo para iniciar seu cadastro como criador</p>
+                
+                <form id="creatorApplicationForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="creatorName">Nome Completo *</label>
+                            <input type="text" id="creatorName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="creatorEmail">E-mail *</label>
+                            <input type="email" id="creatorEmail" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="creatorPhone">Telefone *</label>
+                            <input type="tel" id="creatorPhone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="creatorCPF">CPF *</label>
+                            <input type="text" id="creatorCPF" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="creatorBirth">Data de Nascimento *</label>
+                            <input type="date" id="creatorBirth" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="creatorBank">Banco para Recebimento *</label>
+                            <select id="creatorBank" required>
+                                <option value="">Selecione seu banco</option>
+                                <option value="itau">Itaú</option>
+                                <option value="bradesco">Bradesco</option>
+                                <option value="santander">Santander</option>
+                                <option value="bb">Banco do Brasil</option>
+                                <option value="caixa">Caixa Econômica</option>
+                                <option value="nubank">Nubank</option>
+                                <option value="inter">Inter</option>
+                                <option value="other">Outro</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="creatorCategory">Categoria de Conteúdo *</label>
+                        <select id="creatorCategory" required multiple>
+                            <option value="latina">Latina</option>
+                            <option value="europeia">Europeia</option>
+                            <option value="asiatica">Asiática</option>
+                            <option value="afro">Afro</option>
+                            <option value="fitness">Fitness</option>
+                            <option value="cosplay">Cosplay</option>
+                            <option value="alternative">Alternativo</option>
+                            <option value="mature">Madura</option>
+                        </select>
+                        <small>Segure Ctrl para selecionar múltiplas categorias</small>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label>Documentos Necessários *</label>
+                        <div class="file-upload" id="documentUpload">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h4>Arraste documentos aqui ou clique para fazer upload</h4>
+                            <p>Envie: RG ou CNH frente/verso, comprovante de residência</p>
+                        </div>
+                        <div class="uploaded-files" id="uploadedFiles">
+                            <!-- Arquivos enviados aparecerão aqui -->
+                        </div>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="creatorBio">Biografia *</label>
+                        <textarea id="creatorBio" rows="4" required placeholder="Conte um pouco sobre você e seu conteúdo..."></textarea>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="creatorLinks">Links para Redes Sociais</label>
+                        <textarea id="creatorLinks" rows="2" placeholder="Instagram, Twitter, OnlyFans, etc..."></textarea>
+                    </div>
+                    
+                    <div class="form-checkboxes">
+                        <label class="checkbox">
+                            <input type="checkbox" id="creatorTerms" required>
+                            <span>Li e aceito os <a href="#">Termos para Criadores</a> e <a href="#">Contrato de Parceria</a></span>
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" id="creatorAge" required>
+                            <span>Confirmo que tenho 18 anos ou mais</span>
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" id="creatorContent" required>
+                            <span>Declaro que todo conteúdo enviado é de minha autoria</span>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit-application">
+                        <i class="fas fa-paper-plane"></i> Enviar Inscrição
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <!-- Footer content -->
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Configurar calculadora de ganhos
+        document.addEventListener('DOMContentLoaded', function() {
+            const subscribersRange = document.getElementById('subscribersRange');
+            const subscribersValue = document.getElementById('subscribersValue');
+            const monthlyEarnings = document.getElementById('monthlyEarnings');
+            const yearlyEarnings = document.getElementById('yearlyEarnings');
+            
+            function updateEarnings() {
+                const subscribers = parseInt(subscribersRange.value);
+                subscribersValue.textContent = `${subscribers} assinantes`;
+                
+                // Cálculo: 70% de R$29,90 por assinante
+                const monthlyPerSubscriber = 29.90 * 0.70; // R$20,93 por assinante
+                const monthlyTotal = subscribers * monthlyPerSubscriber;
+                const yearlyTotal = monthlyTotal * 12;
+                
+                monthlyEarnings.textContent = `R$ ${monthlyTotal.toFixed(2)}`;
+                yearlyEarnings.textContent = `R$ ${yearlyTotal.toFixed(2)}`;
+            }
+            
+            subscribersRange.addEventListener('input', updateEarnings);
+            updateEarnings();
+            
+            // Configurar upload de arquivos
+            const documentUpload = document.getElementById('documentUpload');
+            const uploadedFiles = document.getElementById('uploadedFiles');
+            
+            documentUpload.addEventListener('click', function() {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.multiple = true;
+                input.accept = '.jpg,.jpeg,.png,.pdf';
+                
+                input.onchange = function(e) {
+                    const files = Array.from(e.target.files);
+                    files.forEach(file => {
+                        const fileItem = document.createElement('div');
+                        fileItem.className = 'file-item';
+                        fileItem.innerHTML = `
+                            <div class="file-info">
+                                <i class="fas fa-file"></i>
+                                <span>${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)</span>
+                            </div>
+                            <button type="button" class="remove-file">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        `;
+                        
+                        uploadedFiles.appendChild(fileItem);
+                        
+                        // Adicionar evento para remover arquivo
+                        fileItem.querySelector('.remove-file').addEventListener('click', function() {
+                            fileItem.remove();
+                        });
+                    });
+                };
+                
+                input.click();
+            });
+            
+            // Configurar arrastar e soltar
+            documentUpload.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.style.backgroundColor = 'rgba(255, 64, 129, 0.1)';
+            });
+            
+            documentUpload.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                this.style.backgroundColor = '';
+            });
+            
+            documentUpload.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.style.backgroundColor = '';
+                
+                const files = Array.from(e.dataTransfer.files);
+                files.forEach(file => {
+                    if (file.type.match('image.*') || file.type === 'application/pdf') {
+                        const fileItem = document.createElement('div');
+                        fileItem.className = 'file-item';
+                        fileItem.innerHTML = `
+                            <div class="file-info">
+                                <i class="fas fa-file"></i>
+                                <span>${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)</span>
+                            </div>
+                            <button type="button" class="remove-file">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        `;
+                        
+                        uploadedFiles.appendChild(fileItem);
+                        
+                        fileItem.querySelector('.remove-file').addEventListener('click', function() {
+                            fileItem.remove();
+                        });
+                    }
+                });
+            });
+            
+            // Configurar formulário
+            const applicationForm = document.getElementById('creatorApplicationForm');
+            
+            applicationForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validações
+                const files = uploadedFiles.querySelectorAll('.file-item');
+                if (files.length < 2) {
+                    alert('Por favor, envie pelo menos 2 documentos (RG/CNH e comprovante)');
+                    return;
+                }
+                
+                // Simular envio
+                const submitBtn = this.querySelector('.btn-submit-application');
+                const originalText = submitBtn.innerHTML;
+                
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+                submitBtn.disabled = true;
+                
+                setTimeout(() => {
+                    submitBtn.innerHTML = '<i class="fas fa-check"></i> Inscrição Enviada!';
+                    
+                    // Registrar evento
+                    gtag('event', 'creator_application', {
+                        'event_category': 'Conversion',
+                        'event_label': 'Creator Application'
+                    });
+                    
+                    // Redirecionar após 2 segundos
+                    setTimeout(() => {
+                        window.location.href = '../index.html?application=success';
+                    }, 2000);
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
